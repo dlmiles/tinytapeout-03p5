@@ -38,6 +38,19 @@ jobs:
         repository: tinytapeout/tt-multiplexer
         path: tt-multiplexer
 
+    # dlm DEBUG GHA
+    - name: DEBUG
+      run: |
+        set +e
+        declare -p | grep GITHUB
+        echo "GH_USERNAME=$GH_USERNAME"
+        echo -n "GH_TOKEN="
+        echo -n $GH_TOKEN | sha1sum -
+        echo -n $GH_TOKEN | wc
+        declare -p | grep -i suite
+        declare -p | grep -i _temp
+        exit 0
+
     # get caravel makefile and management core for sims. need PDK for some of the verification
     - name: caravel & PDK
       run: |
@@ -50,12 +63,76 @@ jobs:
         wget https://static.dev.sifive.com/dev-tools/riscv64-unknown-elf-gcc-8.3.0-2020.04.1-x86_64-linux-ubuntu14.tar.gz
         tar -xzf riscv64-unknown-elf-gcc-8.3.0-2020.04.1-x86_64-linux-ubuntu14.tar.gz
 
+    # debug
+    - name: debug1
+      run: |
+        set +e
+
+        which python
+        python -V
+
+        which python3
+        python3 -V
+
+        which python3.8
+        python3.8 -V
+
+        which python3.9
+        python3.9 -V
+
+        which python3.10
+        python3.10 -V
+
+        pip3 list
+        which pip3
+
+        declare -p | grep PYTHON
+
+        echo PATH=$PATH
+
+        pwd
+        ls -la
+
+        exit 0
+
     # install oss fpga tools for cocotb and iverilog
     - name: install oss-cad-suite
       uses: YosysHQ/setup-oss-cad-suite@v2
       with:
           version: '2022-09-03' # pin the version, latest one fails to work with caravel
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    # debug
+    - name: debug1
+      run: |
+        set +e
+
+        which python
+        python -V
+
+        which python3
+        python3 -V
+
+        which python3.8
+        python3.8 -V
+
+        which python3.9
+        python3.9 -V
+
+        which python3.10
+        python3.10 -V
+
+        pip3 list
+        which pip3
+
+        declare -p | grep PYTHON
+
+        echo PATH=$PATH
+
+        pwd
+        ls -la
+
+        exit 0
 
     # Set Python up
     - name: setup python
@@ -64,6 +141,74 @@ jobs:
         python-version: '3.10'
     - run: pip install -r tt-multiplexer/proto/requirements.txt
     - run: pip install -r tt/requirements.txt
+
+    # debug
+    - name: debug1
+      run: |
+        set +e
+
+        which python
+        python -V
+
+        which python3
+        python3 -V
+
+        which python3.8
+        python3.8 -V
+
+        which python3.9
+        python3.9 -V
+
+        which python3.10
+        python3.10 -V
+
+        pip3 list
+        which pip3
+
+        declare -p | grep PYTHON
+
+        echo PATH=$PATH
+
+        pwd
+        ls -la
+
+        exit 0
+
+    # debug
+    - name: debug1
+      run: |
+        set +e
+
+        source $RUNNER_TEMP/oss-cad-suite/environment
+
+        which python
+        python -V
+
+        which python3
+        python3 -V
+
+        which python3.8
+        python3.8 -V
+
+        which python3.9
+        python3.9 -V
+
+        which python3.10
+        python3.10 -V
+
+        pip3 list
+        which pip3
+
+        declare -p | grep PYTHON
+
+        echo PATH=$PATH
+
+        pwd
+        ls -la
+        echo "### /"
+        ls -la /
+
+        exit 0
 
     # fetch the repos - test mode
     - name: fetch all
@@ -95,7 +240,76 @@ jobs:
         make clean test_mux
 
     # run caravel level test (currently disabled, as it fails because of Python setup)
-#    - name: caravel simulations
-#      run: |
-#        cd verilog/dv/mux_ext
-#        make clean coco_test
+    - name: caravel simulations
+      run: |
+        # Make Python 3.8 from oss-cad-suite the priority in $PATH again and fixup some $ENVs
+        source $RUNNER_TEMP/oss-cad-suite/environment
+        # Hmm maybe GHA YosysHQ/setup-oss-cad-suite should do this automatically ?
+        [ -e /yosyshq ] || sudo ln -s $RUNNER_TEMP/oss-cad-suite /yosyshq
+        # Give Python a hint as to where to load things from
+        #export PYTHONHOME=$RUNNER_TEMP/oss-cad-suite
+        cd verilog/dv/mux_ext
+        make clean coco_test
+
+    # run caravel level test (currently disabled, as it fails because of Python setup)
+    - name: caravel simulations DEBUG
+      run: |
+        set +e
+        declare -p | grep PYTHON
+
+        source $RUNNER_TEMP/oss-cad-suite/environment
+        echo PATH=$PATH
+
+        declare -p | grep PYTHON
+        echo "### python3 -V:"
+        python3 -V
+        pip3 -V
+        echo "### python -V:"
+        python -V || true
+        pip -V || true
+
+        # Hmm maybe oss-cad-suite should supply this just in case ?
+        ln -s python3 $RUNNER_TEMP/oss-cad-suite/py3bin/python
+        ln -s pip3    $RUNNER_TEMP/oss-cad-suite/py3bin/pip
+        ls -la $RUNNER_TEMP/oss-cad-suite/py3bin
+        # Hmm maybe GHA YosysHQ/setup-oss-cad-suite should do this automatically ?
+        # ln: failed to create symbolic link '/yosyshq': Permission denied
+        [ -e /yosyshq ] || ln -s $RUNNER_TEMP/oss-cad-suite /yosyshq
+        echo "### LN1"
+        ls -lad /yosyshq
+        echo "### LN2"
+        [ -e /yosyshq ] || sudo ln -s $RUNNER_TEMP/oss-cad-suite /yosyshq
+        ls -lad /yosyshq
+        ls -la /
+        ls -la /yosyshq/lib/python3.8
+        hash -r
+
+        echo "### python -V:"
+        python -V || true
+        pip -V || true
+
+        #pip3 install -r tt-multiplexer/proto/requirements.txt
+        #pip3 install -r tt/requirements.txt
+        pip3 list
+
+        unset PYTHONPATH
+        # Remove DSO location search priority added actions/setup-python
+        unset LD_LIBRARY_PATH
+        # Our alternative might looks like but lets try without needing it
+        #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$RUNNER_TEMP/oss-cad-suite/lib/python3.8/lib-dynload"
+
+        # Normally this does not need to be setup but maybe actions/setup-python
+        export PYTHONHOME=$RUNNER_TEMP/oss-cad-suite
+
+        # Remove entries starting with $pythonLocation from $PATH added by actions/setup-python
+        if [ "${pythonLocation:+set}" = "set" ]
+        then
+          _PATH=$PATH
+          echo "BEFORE-PATH: $PATH"
+          PATH=$(echo -n "$PATH" | sed -e "s#${pythonLocation}[^:]\+:##g")
+          echo "AFTER-PATH: $PATH"
+        fi
+
+        set -e
+        cd verilog/dv/mux_ext
+        make clean coco_test
