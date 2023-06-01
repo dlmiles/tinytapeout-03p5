@@ -20,6 +20,11 @@ jobs:
         GCC_PATH:           /home/runner/riscv64-unknown-elf-gcc-8.3.0-2020.04.1-x86_64-linux-ubuntu14/bin/
         GCC_PREFIX:         riscv64-unknown-elf
 
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+
     # ubuntu
     runs-on: ubuntu-latest
     steps:
