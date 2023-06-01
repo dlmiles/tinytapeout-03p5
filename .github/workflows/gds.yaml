@@ -32,6 +32,19 @@ jobs:
         path: tt
         ref: tt03p5
 
+    # dlm DEBUG GHA
+    - name: DEBUG
+      env:
+        GH_TOKEN:       ${{ secrets.GITHUB_TOKEN }}
+        GH_USERNAME:    ${{ github.actor }}
+      run: |
+        declare -p | grep GITHUB
+        echo "GH_USERNAME=$GH_USERNAME"
+        echo -n "GH_TOKEN="
+        echo -n $GH_TOKEN | sha1sum -
+        echo -n $GH_TOKEN | wc
+        exit 0
+
     # Set Python up
     - name: setup python
       uses: actions/setup-python@v4
@@ -50,6 +63,7 @@ jobs:
     - name: Fetch user project, update caravel configuration
       run: python ./tt/configure.py --clone-all --fetch-gds --update-caravel --sram-support
       env:
+        GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
         GH_TOKEN:       ${{ secrets.GH_TOKEN }}
         GH_USERNAME:    ${{ secrets.GH_USERNAME }}
 
