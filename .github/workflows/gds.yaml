@@ -72,6 +72,7 @@ jobs:
     - name: patch tt-multiplexer
       run: |
         git apply --directory=tt-multiplexer tt_mux.patch
+        git apply --directory=tt-multiplexer tt_top.patch
         git apply --directory=tt-multiplexer gen_tt_user_module.sram.patch
 
     - name: generate tt_user_module.v

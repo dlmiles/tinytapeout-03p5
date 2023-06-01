@@ -30,9 +30,11 @@ and works around an issue with `yosys` inserting buffers on the `spine_ow` signa
 git apply --directory=tt-multiplexer tt_mux.patch
 ```
 
-Then also apply the following patch, to enable sram support:
+Then also apply the following patches, to enable sram support and caravel logic analyzer debugging:
+
 ```
 git apply --directory=tt-multiplexer gen_tt_user_module.sram.patch
+git apply --directory=tt-multiplexer tt_top.patch
 ```
 
 Important: make sure you are using efabless/openlane docker tag 2023.05.19 (or newer). 

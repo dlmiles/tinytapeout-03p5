@@ -77,6 +77,7 @@ jobs:
 
     - name: patch tt-multiplexer
       run: |
+        git apply --directory=tt-multiplexer tt_top.patch
         git apply --directory=tt-multiplexer gen_tt_user_module.sram.patch
 
     # generate the tt mux verilog that instantiates all the modules - use the test version
