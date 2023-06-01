@@ -28,9 +28,9 @@ jobs:
     - name: checkout tt-support-tools repo
       uses: actions/checkout@v3
       with:
-        repository: tinytapeout/tt-support-tools
+        repository: dlmiles/tt-support-tools
         path: tt
-        ref: tt03p5
+        ref: dlm-tt03p5
 
     # dlm DEBUG GHA
     - name: DEBUG

@@ -34,8 +34,8 @@ jobs:
     - name: checkout tt tools repo
       uses: actions/checkout@v3
       with:
-        repository: tinytapeout/tt-support-tools
-        ref: tt03p5
+        repository: dlmiles/tt-support-tools
+        ref: dlm-tt03p5
         path: tt
 
     # install the tt mux
