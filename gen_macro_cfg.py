@@ -29,7 +29,7 @@ def validate_slot_height(y, x, valid_heights):
     if not slot_index in slots:
         return False
 
-    slot_name = slots[slot_index]
+    slot_name = slots[slot_index]['name']
     width, height = get_macro_size(slot_name)
     if not height in valid_heights:
         raise Exception(
@@ -85,5 +85,9 @@ for y in range(ROWS):
                 f"tt_top1.branch\[{mux_idx+1}\].col_um\[{x}\].um_bot_I.block_{mux_idx}_{x+16}.tt_um_I {pos_x: <7.2f} {pos_y:.2f}   FN\n"
             )
     macrofile.write(f"\n")
+
+macrofile.write(f"# SRAM\n")
+# hard-coded for now: SRAM macro, right above urish_sram_poc
+macrofile.write(f'tt_top1.branch\[1\].col_um\[7\].um_top_I.block_1_23.sram 1512.48 1200        N')
 
 macrofile.close()

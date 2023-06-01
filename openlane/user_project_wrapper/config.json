@@ -26,6 +26,7 @@
     "EXTRA_LEFS": [
         "dir::../../lef/tt_ctrl.lef",
         "dir::../../lef/tt_mux.lef",
+        "dir::../../lef/sky130_sram_2kbyte_1rw1r_32x512_8.lef",
         "dir::../../lef/tt_um_test.lef",
         "dir::../../lef/tt_um_MichaelBell_hovalaag.lef",
         "dir::../../lef/tt_um_as1802.lef",
@@ -41,11 +42,13 @@
         "dir::../../lef/tt_um_wokwi_366318576852367361.lef",
         "dir::../../lef/tt_um_loopback.lef",
         "dir::../../lef/tt_um_power_test.lef",
-        "dir::../../lef/tt_um_psychogenic_neptuneproportional.lef"
+        "dir::../../lef/tt_um_psychogenic_neptuneproportional.lef",
+        "dir::../../lef/tt_um_urish_sram_poc.lef"
     ],
     "EXTRA_GDS_FILES": [
         "dir::../../gds/tt_ctrl.gds",
         "dir::../../gds/tt_mux.gds",
+        "dir::../../gds/sky130_sram_2kbyte_1rw1r_32x512_8.gds",
         "dir::../../gds/tt_um_test.gds",
         "dir::../../gds/tt_um_MichaelBell_hovalaag.gds",
         "dir::../../gds/tt_um_as1802.gds",
@@ -61,7 +64,8 @@
         "dir::../../gds/tt_um_wokwi_366318576852367361.gds",
         "dir::../../gds/tt_um_loopback.gds",
         "dir::../../gds/tt_um_power_test.gds",
-        "dir::../../gds/tt_um_psychogenic_neptuneproportional.gds"
+        "dir::../../gds/tt_um_psychogenic_neptuneproportional.gds",
+        "dir::../../gds/tt_um_urish_sram_poc.gds"
     ],
     "RUN_KLAYOUT_XOR": 0,
     "RUN_KLAYOUT_DRC": 0,

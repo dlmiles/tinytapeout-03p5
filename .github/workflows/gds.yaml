@@ -48,7 +48,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
    
     - name: Fetch user project, update caravel configuration
-      run: python ./tt/configure.py --clone-all --fetch-gds --update-caravel
+      run: python ./tt/configure.py --clone-all --fetch-gds --update-caravel --sram-support
       env:
         GH_TOKEN:       ${{ secrets.GH_TOKEN }}
         GH_USERNAME:    ${{ secrets.GH_USERNAME }}
@@ -63,9 +63,16 @@ jobs:
         git clone --depth=1 --branch $OPENLANE_TAG https://github.com/The-OpenROAD-Project/OpenLane.git $OPENLANE_ROOT
         cd $OPENLANE_ROOT
         make
-    
+
+    # uncompress any gds commited to the repo
+    - name: uncompress gds
+      run: | 
+        make uncompress
+
     - name: patch tt-multiplexer
-      run: git apply --directory=tt-multiplexer tt_mux.patch
+      run: |
+        git apply --directory=tt-multiplexer tt_mux.patch
+        git apply --directory=tt-multiplexer gen_tt_user_module.sram.patch
 
     - name: generate tt_user_module.v
       run: make gen-user-module

@@ -30,6 +30,11 @@ and works around an issue with `yosys` inserting buffers on the `spine_ow` signa
 git apply --directory=tt-multiplexer tt_mux.patch
 ```
 
+Then also apply the following patch, to enable sram support:
+```
+git apply --directory=tt-multiplexer gen_tt_user_module.sram.patch
+```
+
 Important: make sure you are using efabless/openlane docker tag 2023.05.19 (or newer). 
 Previous version may introduce a bug in the `tt_mux` that will result in disconnected `um_ow` signals.
 
