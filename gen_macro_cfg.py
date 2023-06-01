@@ -87,7 +87,9 @@ for y in range(ROWS):
     macrofile.write(f"\n")
 
 macrofile.write(f"# SRAM\n")
-# hard-coded for now: SRAM macro, right above urish_sram_poc
-macrofile.write(f'tt_top1.branch\[1\].col_um\[7\].um_top_I.block_1_23.sram 1512.48 1200        N')
+for slot in slots.values():
+    if slot.get('sram', False):
+        # hard-coded for now: SRAM macro, right above urish_sram_poc
+        macrofile.write(f'tt_top1.branch\[1\].col_um\[7\].um_top_I.block_1_23.sram 1512.48 1200        N\n')
 
 macrofile.close()
