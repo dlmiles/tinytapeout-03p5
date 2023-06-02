@@ -50,6 +50,7 @@ jobs:
     - name: Fetch user project, update caravel configuration
       run: python ./tt/configure.py --clone-all --fetch-gds --update-caravel --sram-support
       env:
+        GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
         GH_TOKEN:       ${{ secrets.GH_TOKEN }}
         GH_USERNAME:    ${{ secrets.GH_USERNAME }}
 
