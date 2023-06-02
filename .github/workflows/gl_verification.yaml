@@ -9,6 +9,7 @@ jobs:
         OPENLANE_ROOT:      /home/runner/openlane
         PDK_ROOT:           /home/runner/pdk
         PDK:                sky130A
+        GITHUB_TOKEN:       ${{ secrets.GITHUB_TOKEN }}
         GH_TOKEN:           ${{ secrets.GH_TOKEN }}
         GH_USERNAME:        ${{ secrets.GH_USERNAME }}
         DESIGNS:            /home/runner/work/tinytapeout-03p5/tinytapeout-03p5
