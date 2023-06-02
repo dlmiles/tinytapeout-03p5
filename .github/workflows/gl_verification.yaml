@@ -9,9 +9,6 @@ jobs:
         OPENLANE_ROOT:      /home/runner/openlane
         PDK_ROOT:           /home/runner/pdk
         PDK:                sky130A
-        GITHUB_TOKEN:       ${{ secrets.GITHUB_TOKEN }}
-        GH_TOKEN:           ${{ secrets.GH_TOKEN }}
-        GH_USERNAME:        ${{ secrets.GH_USERNAME }}
         DESIGNS:            /home/runner/work/tinytapeout-03p5/tinytapeout-03p5
         TARGET_PATH:        /home/runner/work/tinytapeout-03p5/tinytapeout-03p5
         MGMT_AREA_ROOT:     /home/runner/work/tinytapeout-03p5/tinytapeout-03p5/mgmt_core_wrapper
@@ -82,6 +79,10 @@ jobs:
 
     # fetch the repos,
     - name: Fetch user project, update caravel configuration
+      env:
+        GITHUB_TOKEN:       ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN:           ${{ secrets.GH_TOKEN }}
+        GH_USERNAME:        ${{ secrets.GH_USERNAME }}
       run: python ./tt/configure.py --test --clone-all --fetch-gds --update-caravel
 
     # generate the tt mux verilog that instantiates all the modules - use the test version
